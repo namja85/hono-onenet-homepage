@@ -1,3 +1,5 @@
+import Container from "@/components/Container";
+
 const navItems = [
   {
     label: "회사 소개",
@@ -23,19 +25,27 @@ const navItems = [
 
 export default function Header() {
   return (
-    <header>
-      <div>
-        <img src="/onenet-logo.png" alt="logo" />
-      </div>
-      <nav>
-        <ul>
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <header class="py-2">
+      <Container class="flex items-center justify-between">
+        <div class="w-12 h-12">
+          <img
+            class="w-full h-full object-contain"
+            src="/public/images/onenet-logo.png"
+            alt="원넷 로고"
+          />
+        </div>
+        <nav>
+          <ul class="flex items-center gap-10">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a href={item.href}>
+                  <span class="text-lg font-bold">{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Container>
     </header>
   );
 }
