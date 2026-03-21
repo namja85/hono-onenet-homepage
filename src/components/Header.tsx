@@ -28,11 +28,13 @@ export default function Header() {
     <header class="py-2">
       <Container class="flex items-center justify-between">
         <div class="w-12 h-12">
-          <img
-            class="w-full h-full object-contain"
-            src="/public/images/onenet-logo.png"
-            alt="원넷 로고"
-          />
+          <a href="/">
+            <img
+              class="w-full h-full object-contain"
+              src="/public/images/onenet-logo.png"
+              alt="원넷 로고"
+            />
+          </a>
         </div>
         <nav>
           <ul class="flex items-center gap-10">
