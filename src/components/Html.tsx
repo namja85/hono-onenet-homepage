@@ -2,15 +2,19 @@ import { PropsWithChildren } from "hono/jsx";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-interface HtmlProps extends PropsWithChildren {}
+interface HtmlProps extends PropsWithChildren {
+  title: string;
+  description: string;
+}
 
-export default function Html({ children }: HtmlProps) {
+export default function Html({ title, description, children }: HtmlProps) {
   return (
     <html lang="ko">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>원넷</title>
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico?v=1" />
         <link
           rel="stylesheet"

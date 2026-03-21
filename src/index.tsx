@@ -10,7 +10,6 @@ app
   .use(logger())
   .use("/favicon.ico", serveStatic({ path: "./public/images/favicon.ico" }))
   .use("/public/*", serveStatic({ root: "./" }))
-  .use(htmlMiddleware())
   .route("/", pagesRoute);
 
 export default app;
