@@ -6,6 +6,8 @@ import Service from "@/pages/service";
 import Support from "@/pages/support";
 import CustomerCenter from "@/pages/customer-center";
 import Inquiry from "@/pages/inquiry";
+import InquirySubmitSuccess from "@/pages/inquiry/submit-success";
+import InquirySubmitFail from "@/pages/inquiry/submit-fail";
 
 const pagesRoute = new Hono();
 
@@ -74,6 +76,29 @@ pagesRoute
     }),
     (c) => {
       return c.render(<Inquiry />);
+    }
+  )
+  .post(
+    "/inquiry",
+    htmlMiddleware({
+      title: "원넷 | 고객문의 접수",
+      description: "고객 문의 접수 처리 결과 페이지입니다.",
+    }),
+    async (c) => {
+      const formData = await c.req.formData();
+      const name = String(formData.get("name") || "").trim();
+      const phone = String(formData.get("phone") || "").trim();
+      const email = String(formData.get("email") || "").trim();
+      const message = String(formData.get("message") || "").trim();
+      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const isSuccess = name && phone && email && message && isEmailValid;
+
+      if (!isSuccess) {
+        c.status(400);
+        return c.render(<InquirySubmitFail />);
+      }
+
+      return c.render(<InquirySubmitSuccess />);
     }
   );
 

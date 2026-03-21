@@ -18,7 +18,7 @@ export default function Inquiry() {
             원넷에게 <span class="text-blue-900 font-bold">문의합니다.</span>
           </h2>
 
-          <form class="space-y-4">
+          <form action="/inquiry" method="post" class="space-y-4">
             <div class="flex flex-col border border-neutral-200 rounded-xl p-4">
               <div class="flex flex-col md:flex-row gap-2 md:gap-4 py-2">
                 <div class="w-full md:w-48 bg-neutral-200 rounded-md p-2 flex justify-center">
@@ -33,8 +33,10 @@ export default function Inquiry() {
                   <input
                     type="text"
                     id="name"
+                    name="name"
                     class="w-full p-2 rounded-md border border-neutral-400"
                     placeholder="이름 (법인명)을 입력해주세요."
+                    required
                   />
                 </div>
               </div>
@@ -51,8 +53,10 @@ export default function Inquiry() {
                   <input
                     type="text"
                     id="phone"
+                    name="phone"
                     class="w-full p-2 rounded-md border border-neutral-400"
                     placeholder="연락처를 입력해주세요."
+                    required
                   />
                 </div>
               </div>
@@ -67,10 +71,12 @@ export default function Inquiry() {
                 </div>
                 <div class="flex-1">
                   <input
-                    type="text"
+                    type="email"
                     id="email"
+                    name="email"
                     class="w-full p-2 rounded-md border border-neutral-400"
                     placeholder="이메일을 입력해주세요."
+                    required
                   />
                 </div>
               </div>
@@ -86,8 +92,10 @@ export default function Inquiry() {
                 <div class="flex-1">
                   <textarea
                     id="message"
+                    name="message"
                     class="w-full p-2 rounded-md border border-neutral-400 min-h-32 md:min-h-60"
                     placeholder="문의내용을 입력해주세요."
+                    required
                   ></textarea>
                 </div>
               </div>
