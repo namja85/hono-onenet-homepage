@@ -26,7 +26,7 @@ const navItems = [
 
 export default function Header() {
   return (
-    <header class="px-4 py-2">
+    <header class="p-4">
       <Container class="relative flex items-center justify-between">
         <div class="h-12 w-12">
           <a href="/">
@@ -38,7 +38,10 @@ export default function Header() {
           </a>
         </div>
         <input type="checkbox" id="menu-toggle" class="peer hidden" />
-        <label for="menu-toggle" class="relative z-50 ml-auto block cursor-pointer md:hidden">
+        <label
+          for="menu-toggle"
+          class="relative z-50 ml-auto block cursor-pointer md:hidden"
+        >
           <Menu />
         </label>
 

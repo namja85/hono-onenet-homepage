@@ -5,5 +5,7 @@ interface ContainerProps extends PropsWithChildren {
 }
 
 export default function Container({ children, class: cls }: ContainerProps) {
-  return <div class={`container mx-auto ${cls ?? ""}`}>{children}</div>;
+  return (
+    <div class={`container max-w-7xl mx-auto ${cls ?? ""}`}>{children}</div>
+  );
 }

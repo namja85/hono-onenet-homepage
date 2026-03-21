@@ -18,7 +18,7 @@ export default function Carousel({ items }: CarouselProps) {
               src={item.url}
               alt={item.description}
             />
-            <p class="text-white text-base/6 md:text-3xl/10 absolute top-1/2 -translate-y-1/2 left-0 right-0 px-4 md:px-16 py-8 bg-black/30">
+            <p class="text-white text-base/6 md:text-3xl/10 absolute top-1/2 -translate-y-1/2 left-0 right-0 px-4 md:px-16 py-8 bg-black/30 text-center">
               {item.description}
             </p>
           </div>
