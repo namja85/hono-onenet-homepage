@@ -1,10 +1,10 @@
 import { Hono } from "hono";
-import Home from "@/pages/(root)/index";
+import { logger } from "hono/logger";
+import { htmlMiddleware } from "@/middlewares/html.middleware";
+import pagesRoute from "@/routes/pages.route";
 
 const app = new Hono();
 
-app.get("/", (c) => {
-  return c.render(<Home />);
-});
+app.use(logger()).use(htmlMiddleware()).route("/", pagesRoute);
 
 export default app;
