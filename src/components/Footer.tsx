@@ -2,12 +2,12 @@ import Container from "@/components/Container";
 
 export default function Footer() {
   return (
-    <footer class="bg-neutral-800 text-neutral-300">
+    <footer class="bg-neutral-800 text-neutral-300 p-4">
       <Container class="py-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* 로고 & 회사명 */}
           <div class="lg:col-span-2 flex flex-col gap-4">
-            <div class="flex items-center gap-4">
+            <div class="flex justify-center md:justify-start items-center gap-4">
               <img
                 src="/public/images/onenet-logo.png"
                 alt="원넷 로고"
@@ -22,46 +22,46 @@ export default function Footer() {
                 </p>
               </div>
             </div>
-            <p class="text-sm text-neutral-400">
+            <p class="text-sm text-neutral-400 text-center md:text-left">
               Copyright © 2026 ONENET. All rights reserved.
             </p>
           </div>
 
           {/* 연락처 정보 */}
           <div class="space-y-4">
-            <h3 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">
+            <h3 class="text-sm font-bold text-neutral-400 uppercase tracking-wider text-center md:text-left">
               연락처
             </h3>
             <ul class="space-y-3">
-              <li class="flex flex-col gap-1">
+              <li class="flex flex-col gap-1 text-center md:text-left">
                 <span class="text-xs text-neutral-500">주소</span>
-                <span class="text-sm">
+                <span class="text-sm text-center md:text-left">
                   (41256) 대구광역시 동구 동대구로 489, 8층 811호
                 </span>
               </li>
-              <li class="flex flex-col gap-1">
+              <li class="flex flex-col gap-1 text-center md:text-left">
                 <span class="text-xs text-neutral-500">전화</span>
                 <a
                   href="tel:1544-0557"
-                  class="text-sm hover:text-neutral-400 transition-colors"
+                  class="text-sm hover:text-neutral-400 transition-colors text-center md:text-left"
                 >
                   1544-0557
                 </a>
               </li>
-              <li class="flex flex-col gap-1">
+              <li class="flex flex-col gap-1 text-center md:text-left">
                 <span class="text-xs text-neutral-500">팩스</span>
                 <a
                   href="fax:02-592-5059"
-                  class="text-sm hover:text-neutral-400 transition-colors"
+                  class="text-sm hover:text-neutral-400 transition-colors text-center md:text-left"
                 >
                   02-592-5059
                 </a>
               </li>
-              <li class="flex flex-col gap-1">
+              <li class="flex flex-col gap-1 text-center md:text-left">
                 <span class="text-xs text-neutral-500">이메일</span>
                 <a
                   href="mailto:One-net@naver.com"
-                  class="text-sm hover:text-neutral-400 transition-colors"
+                  class="text-sm hover:text-neutral-400 transition-colors text-center md:text-left"
                 >
                   One-net@naver.com
                 </a>
@@ -71,7 +71,7 @@ export default function Footer() {
 
           {/* 링크 */}
           <div class="space-y-4">
-            <h3 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">
+            <h3 class="text-sm font-bold text-neutral-400 uppercase tracking-wider text-center md:text-left">
               바로가기
             </h3>
             <ul class="space-y-2">
@@ -82,7 +82,7 @@ export default function Footer() {
                 { label: "고객 센터", href: "/customer-center" },
                 { label: "고객 문의", href: "/inquiry" },
               ].map((item) => (
-                <li key={item.href}>
+                <li key={item.href} class="text-center md:text-left">
                   <a
                     href={item.href}
                     class="text-sm hover:text-neutral-400 transition-colors"
@@ -97,7 +97,7 @@ export default function Footer() {
 
         {/* 하단 구분선 */}
         <div class="mt-12 pt-8 border-t border-neutral-700">
-          <p class="text-xs text-neutral-500 text-center">
+          <p class="text-xs text-neutral-500 text-center md:text-left">
             원넷 ㈜ | 사업자등록번호: 278-88-00237 | 대표이사: 권성일
           </p>
         </div>

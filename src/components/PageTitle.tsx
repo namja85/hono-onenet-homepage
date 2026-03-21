@@ -7,9 +7,13 @@ interface PageTitleProps extends PropsWithChildren {
 
 export default function PageTitle({ title, description }: PageTitleProps) {
   return (
-    <div>
-      <h1 class="text-5xl/20 font-bold text-white text-center">{title}</h1>
-      <p class="text-lg text-neutral-200 text-center">{description}</p>
+    <div class="p-4">
+      <h1 class="text-2xl/20 md:text-5xl/20 font-bold text-white text-center">
+        {title}
+      </h1>
+      <p class="text-base/6 md:text-lg text-neutral-200 text-center">
+        {description}
+      </p>
     </div>
   );
 }

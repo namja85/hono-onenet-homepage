@@ -25,8 +25,8 @@ const navItems = [
 
 export default function Header() {
   return (
-    <header class="py-2">
-      <Container class="flex items-center justify-between">
+    <header class="px-4 py-2">
+      <Container class="flex flex-col md:flex-row items-center justify-between">
         <div class="w-12 h-12">
           <a href="/">
             <img
@@ -37,7 +37,7 @@ export default function Header() {
           </a>
         </div>
         <nav>
-          <ul class="flex items-center gap-10">
+          <ul class="flex flex-col md:flex-row items-center gap-4 md:gap-10">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a href={item.href}>

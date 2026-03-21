@@ -13,8 +13,12 @@ export default function Carousel({ items }: CarouselProps) {
       <div class="swiper-wrapper">
         {items.map((item, index) => (
           <div class="swiper-slide" key={index}>
-            <img src={item.url} alt={item.description} />
-            <p class="text-white text-3xl/10 absolute top-1/2 -translate-y-1/2 left-0 right-0 px-32 py-8 bg-black/30">
+            <img
+              class="w-full h-full object-cover"
+              src={item.url}
+              alt={item.description}
+            />
+            <p class="text-white text-base/6 md:text-3xl/10 absolute top-1/2 -translate-y-1/2 left-0 right-0 px-4 md:px-16 py-8 bg-black/30">
               {item.description}
             </p>
           </div>

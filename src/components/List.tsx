@@ -7,7 +7,7 @@ interface ListProps extends PropsWithChildren {
 export default function List({ children, class: cls }: ListProps) {
   return (
     <div>
-      <ul class={`space-y-4 ${cls ?? ""}`}>{children}</ul>
+      <ul class={`space-y-2 md:space-y-4 ${cls ?? ""}`}>{children}</ul>
     </div>
   );
 }
