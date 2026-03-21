@@ -1,3 +1,4 @@
+import Carousel from "@/components/Carousel";
 import Container from "@/components/Container";
 import Layout from "@/components/Layout";
 
@@ -6,7 +7,27 @@ export default function Home() {
     <Layout>
       <h1 class="hidden">메인 페이지</h1>
 
-      <section class="h-130 bg-gray-100">slide</section>
+      <section class="h-130 bg-gray-100">
+        <Carousel
+          items={[
+            {
+              url: "/public/images/slide1.png",
+              description:
+                "원넷은 온/오프라인 환경에서 상품과 서비스를 구매할 때 안전하고 편리한 결제 수단을 제공하는 전자결제 전문 기업입니다.",
+            },
+            {
+              url: "/public/images/slide2.png",
+              description:
+                "원넷은 사업형태, 결제환경, 결제방식 등 고객의 입장에서 최고의 맞춤형 결제 서비스를 개발하고 제공합니다.",
+            },
+            {
+              url: "/public/images/slide3.png",
+              description:
+                "원넷은 결제 시스템의 이중화된 보안 체계로 보안성, 안정성을 모두 갖춘 결제 시스템을 제공합니다.",
+            },
+          ]}
+        />
+      </section>
 
       <section class="my-20">
         <Container>
