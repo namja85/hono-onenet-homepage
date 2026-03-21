@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import Menu from "./icons/Menu";
 
 const navItems = [
   {
@@ -26,8 +27,8 @@ const navItems = [
 export default function Header() {
   return (
     <header class="px-4 py-2">
-      <Container class="flex flex-col md:flex-row items-center justify-between">
-        <div class="w-12 h-12">
+      <Container class="relative flex items-center justify-between">
+        <div class="h-12 w-12">
           <a href="/">
             <img
               class="w-full h-full object-contain"
@@ -36,12 +37,33 @@ export default function Header() {
             />
           </a>
         </div>
-        <nav>
-          <ul class="flex flex-col md:flex-row items-center gap-4 md:gap-10">
+        <input type="checkbox" id="menu-toggle" class="peer hidden" />
+        <label for="menu-toggle" class="relative z-50 ml-auto block cursor-pointer md:hidden">
+          <Menu />
+        </label>
+
+        <nav class="hidden md:block">
+          <ul class="flex items-center gap-10">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a href={item.href}>
                   <span class="text-lg font-bold">{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <label
+          for="menu-toggle"
+          class="fixed inset-0 z-30 hidden bg-black/40 peer-checked:block md:hidden"
+        />
+        <nav class="fixed right-0 top-0 z-40 h-full w-72 translate-x-full bg-neutral-800 p-6 pt-20 transition-transform duration-300 peer-checked:translate-x-0 md:hidden">
+          <ul class="flex flex-col gap-6">
+            {navItems.map((item) => (
+              <li key={`mobile-${item.href}`}>
+                <a href={item.href} class="block">
+                  <span class="text-lg font-bold text-white">{item.label}</span>
                 </a>
               </li>
             ))}
