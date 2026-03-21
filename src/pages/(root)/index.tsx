@@ -114,6 +114,8 @@ export default function Home() {
           </div>
         </Container>
       </section>
+
+      <section class="my-40"></section>
     </Layout>
   );
 }
