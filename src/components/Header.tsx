@@ -24,7 +24,9 @@ const navItems = [
 export default function Header() {
   return (
     <header>
-      <div>Logo</div>
+      <div>
+        <img src="/onenet-logo.png" alt="logo" />
+      </div>
       <nav>
         <ul>
           {navItems.map((item) => (
