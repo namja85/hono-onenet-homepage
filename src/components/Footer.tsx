@@ -29,7 +29,7 @@ export default function Footer() {
 
           {/* 연락처 정보 */}
           <div class="space-y-4">
-            <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wider">
+            <h3 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">
               연락처
             </h3>
             <ul class="space-y-3">
@@ -43,7 +43,7 @@ export default function Footer() {
                 <span class="text-xs text-neutral-500">전화</span>
                 <a
                   href="tel:1544-0557"
-                  class="text-sm hover:text-blue-400 transition-colors"
+                  class="text-sm hover:text-neutral-400 transition-colors"
                 >
                   1544-0557
                 </a>
@@ -52,7 +52,7 @@ export default function Footer() {
                 <span class="text-xs text-neutral-500">팩스</span>
                 <a
                   href="fax:02-592-5059"
-                  class="text-sm hover:text-blue-400 transition-colors"
+                  class="text-sm hover:text-neutral-400 transition-colors"
                 >
                   02-592-5059
                 </a>
@@ -61,7 +61,7 @@ export default function Footer() {
                 <span class="text-xs text-neutral-500">이메일</span>
                 <a
                   href="mailto:One-net@naver.com"
-                  class="text-sm hover:text-blue-400 transition-colors"
+                  class="text-sm hover:text-neutral-400 transition-colors"
                 >
                   One-net@naver.com
                 </a>
@@ -71,7 +71,7 @@ export default function Footer() {
 
           {/* 링크 */}
           <div class="space-y-4">
-            <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wider">
+            <h3 class="text-sm font-bold text-neutral-400 uppercase tracking-wider">
               바로가기
             </h3>
             <ul class="space-y-2">
@@ -85,7 +85,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    class="text-sm hover:text-blue-400 transition-colors"
+                    class="text-sm hover:text-neutral-400 transition-colors"
                   >
                     {item.label}
                   </a>
