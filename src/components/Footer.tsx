@@ -80,7 +80,7 @@ export default function Footer() {
                 { label: "서비스 소개", href: "/service" },
                 { label: "기술 지원", href: "/support" },
                 { label: "고객 센터", href: "/customer-center" },
-                { label: "문의", href: "/inquiry" },
+                { label: "고객 문의", href: "/inquiry" },
               ].map((item) => (
                 <li key={item.href}>
                   <a

@@ -18,7 +18,7 @@ const navItems = [
     href: "/customer-center",
   },
   {
-    label: "문의",
+    label: "고객 문의",
     href: "/inquiry",
   },
 ];
