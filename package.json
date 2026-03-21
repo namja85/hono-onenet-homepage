@@ -1,7 +1,11 @@
 {
   "name": "hono-onenet-homepage",
   "scripts": {
-    "dev": "bun run --hot src/index.tsx"
+    "dev": "bun run --hot src/index.tsx",
+    "build": "bun build src/index.tsx --outdir dist --target bun --minify",
+    "start": "bun run dist/index.js",
+    "start:pm2": "pm2 start \"bun run dist/index.js\" --name hono-onenet-homepage",
+    "deploy": "bash ./scripts/deploy-ec2.sh"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
