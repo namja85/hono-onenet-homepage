@@ -1,4 +1,6 @@
 import { Hono } from "hono";
+import { z } from "zod";
+import { zValidator } from "@hono/zod-validator";
 import { htmlMiddleware } from "@/middlewares/html.middleware";
 import Home from "@/pages/(root)/index";
 import Company from "@/pages/company";
@@ -84,14 +86,18 @@ pagesRoute
       title: "원넷 | 고객문의 접수",
       description: "고객 문의 접수 처리 결과 페이지입니다.",
     }),
+    zValidator(
+      "form",
+      z.object({
+        name: z.string().min(1),
+        phone: z.string().min(1),
+        email: z.email(),
+        message: z.string().min(1),
+      })
+    ),
     async (c) => {
-      const formData = await c.req.formData();
-      const name = String(formData.get("name") || "").trim();
-      const phone = String(formData.get("phone") || "").trim();
-      const email = String(formData.get("email") || "").trim();
-      const message = String(formData.get("message") || "").trim();
-      const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      const isSuccess = name && phone && email && message && isEmailValid;
+      const { name, phone, email, message } = c.req.valid("form");
+      const isSuccess = name && phone && email && message;
 
       if (!isSuccess) {
         c.status(400);

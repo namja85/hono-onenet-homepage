@@ -3,13 +3,15 @@
   "scripts": {
     "dev": "bun run --hot src/index.tsx",
     "build": "bun build src/index.tsx --outdir dist --target bun --minify",
-    "start": "bun run dist/index.js",
+    "start": "NODE_ENV=production bun run dist/index.js",
     "start:pm2": "pm2 start \"bun run dist/index.js\" --name hono-onenet-homepage",
     "deploy": "bash ./scripts/deploy-ec2.sh"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.6",
     "date-fns": "^4.1.0",
-    "hono": "^4.12.8"
+    "hono": "^4.12.8",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/bun": "latest"

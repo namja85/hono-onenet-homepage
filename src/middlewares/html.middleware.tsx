@@ -11,7 +11,7 @@ export const htmlMiddleware = ({
   createMiddleware(async (c, next) => {
     c.setRenderer((content) => {
       return c.html(
-        <Html title={title} description={description}>
+        <Html title={title} description={description} pathname={c.req.path}>
           {content}
         </Html>
       );

@@ -43,9 +43,9 @@ export default function Home() {
                 관리를 위해 관리자 페이지를 제공하고 있습니다.
               </p>
             </div>
-            <div class="flex-1 ratio-square bg-neutral-200 rounded-xl overflow-clip">
+            <div class="w-full md:w-1/2 aspect-4/3 shrink-0 bg-neutral-200 rounded-xl overflow-clip">
               <img
-                class="w-full h-full object-contain"
+                class="w-full h-full object-cover"
                 src="/public/images/payment.png"
                 alt="전자결제 (PG) 이미지"
               />
@@ -68,9 +68,9 @@ export default function Home() {
                 효율적인 수납관리를 할 수 있습니다.
               </p>
             </div>
-            <div class="flex-1 ratio-square bg-neutral-200 rounded-xl overflow-clip">
+            <div class="w-full md:w-1/2 aspect-4/3 shrink-0 bg-neutral-200 rounded-xl overflow-clip">
               <img
-                class="w-full h-full object-contain"
+                class="w-full h-full object-cover"
                 src="/public/images/account.png"
                 alt="가상계좌 이미지"
               />
@@ -92,9 +92,9 @@ export default function Home() {
                 있습니다.
               </p>
             </div>
-            <div class="flex-1 ratio-square bg-neutral-200 rounded-xl overflow-clip">
+            <div class="w-full md:w-1/2 aspect-4/3 shrink-0 bg-neutral-200 rounded-xl overflow-clip">
               <img
-                class="w-full h-full object-contain"
+                class="w-full h-full object-cover"
                 src="/public/images/banking.png"
                 alt="펌뱅킹 이미지"
               />
