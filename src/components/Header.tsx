@@ -54,6 +54,11 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            <li key="admin">
+              <a href="/admin">
+                <span class="text-lg font-bold">관리자</span>
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -70,6 +75,11 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            <li key="admin">
+              <a href="/admin" class="block">
+                <span class="text-lg font-bold text-white">관리자</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </Container>

@@ -2,7 +2,7 @@ import { PropsWithChildren } from "hono/jsx";
 
 interface PageTitleProps extends PropsWithChildren {
   title: string;
-  description: string;
+  description?: string;
 }
 
 export default function PageTitle({ title, description }: PageTitleProps) {
@@ -11,9 +11,11 @@ export default function PageTitle({ title, description }: PageTitleProps) {
       <h1 class="text-2xl/20 md:text-5xl/20 font-bold text-white text-center">
         {title}
       </h1>
-      <p class="text-base/6 md:text-lg text-neutral-200 text-center">
-        {description}
-      </p>
+      {description && (
+        <p class="text-base/6 md:text-lg text-neutral-200 text-center">
+          {description}
+        </p>
+      )}
     </div>
   );
 }

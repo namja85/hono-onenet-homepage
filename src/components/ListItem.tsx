@@ -5,10 +5,18 @@ import FileDown from "@/components/icons/FileDown";
 interface ListItemProps extends PropsWithChildren {
   type: "notice" | "download";
   title: string;
-  date: string;
+  date: string | Date;
+  href?: string;
+  hasFile?: boolean;
 }
 
-export default function ListItem({ type, title, date }: ListItemProps) {
+export default function ListItem({
+  type,
+  title,
+  date,
+  href = "#",
+  hasFile = false,
+}: ListItemProps) {
   return (
     <li>
       <div class="border border-neutral-400 rounded-xl p-4 md:p-8 space-y-2 md:space-y-4 hover:border-blue-900 transition-colors duration-300">
@@ -20,9 +28,9 @@ export default function ListItem({ type, title, date }: ListItemProps) {
             {format(new Date(date), "yyyy-MM-dd")}
           </span>
         </div>
-        <a href={`#`} class="flex items-start md:items-center gap-1 md:gap-2">
+        <a href={href} class="flex items-start md:items-center gap-1 md:gap-2">
           <span class="text-base/6 md:text-xl font-bold">{title}</span>
-          {type === "download" && <FileDown />}
+          {hasFile && <FileDown />}
         </a>
       </div>
     </li>

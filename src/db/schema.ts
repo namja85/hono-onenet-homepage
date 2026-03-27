@@ -25,3 +25,6 @@ export const files = pgTable("files", {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export type BoardType = typeof boards.$inferSelect;
+export type FileType = typeof files.$inferSelect;

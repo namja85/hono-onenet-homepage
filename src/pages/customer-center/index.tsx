@@ -3,8 +3,13 @@ import Layout from "@/components/Layout";
 import List from "@/components/List";
 import ListItem from "@/components/ListItem";
 import PageTitle from "@/components/PageTitle";
+import type { BoardType, FileType } from "@/db/schema";
 
-export default function CustomerCenter() {
+interface CustomerCenterProps {
+  boards: (BoardType & { file: FileType | null })[];
+}
+
+export default function CustomerCenter({ boards }: CustomerCenterProps) {
   return (
     <Layout>
       <section class="bg-neutral-800 py-10 md:py-40">
@@ -20,21 +25,25 @@ export default function CustomerCenter() {
             원넷이 <span class="text-blue-900 font-bold">알립니다.</span>
           </h2>
           <List>
-            <ListItem
-              type="download"
-              title="원넷페이_전자지불계약서 양식"
-              date="2026-03-21"
-            />
-            <ListItem
-              type="download"
-              title="원넷페이_전자지불계약서 양식"
-              date="2026-03-21"
-            />
-            <ListItem
-              type="notice"
-              title="원넷페이_전자지불계약서 양식"
-              date="2026-03-21"
-            />
+            {boards.length > 0 ? (
+              <ul class="space-y-4">
+                {boards.map((board) => (
+                  <li key={board.id}>
+                    <ListItem
+                      type={board.type == "notice" ? "notice" : "download"}
+                      hasFile={!!board.file}
+                      title={board.title}
+                      date={board.createdAt}
+                      href={`/admin/boards/${board.id}`}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="text-base/6 md:text-2xl text-neutral-600">
+                게시판이 없습니다.
+              </p>
+            )}
           </List>
         </Container>
       </section>
