@@ -44,7 +44,7 @@ export default function AdminBoardsEdit({ board }: AdminBoardsEditProps) {
                   id="type"
                   name="type"
                   class="w-full p-2 rounded-md border border-neutral-400"
-                  defaultValue={board.type}
+                  value={board.type}
                 >
                   <option value="notice">공지사항</option>
                   <option value="download">자료실</option>
@@ -58,16 +58,18 @@ export default function AdminBoardsEdit({ board }: AdminBoardsEditProps) {
                   name="title"
                   class="w-full p-2 rounded-md border border-neutral-400"
                   placeholder="제목을 입력해주세요."
-                  defaultValue={board.title}
+                  value={board.title}
                 />
               </div>
               <div>
-                <label for="file">파일 첨부</label>
-                {board.file && (
-                  <div>
-                    기존: <span>{board.file.name}</span>
-                  </div>
-                )}
+                <div class="flex justify-between items-center">
+                  <label for="file">파일 첨부</label>
+                  {board.file && (
+                    <span class="text-sm text-neutral-600">
+                      기존: {board.file.name}
+                    </span>
+                  )}
+                </div>
                 <input
                   type="file"
                   id="file"
@@ -82,8 +84,9 @@ export default function AdminBoardsEdit({ board }: AdminBoardsEditProps) {
                   name="content"
                   class="w-full p-2 rounded-md border border-neutral-400 min-h-32 md:min-h-60"
                   placeholder="내용을 입력해주세요."
-                  defaultValue={board.content}
-                ></textarea>
+                >
+                  {board.content}
+                </textarea>
               </div>
 
               <div class="flex justify-end">

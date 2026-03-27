@@ -1,0 +1,1 @@
+ALTER TABLE "files" DROP CONSTRAINT "files_board_id_boards_id_fkey", ADD CONSTRAINT "files_board_id_boards_id_fkey" FOREIGN KEY ("board_id") REFERENCES "boards"("id") ON DELETE CASCADE;

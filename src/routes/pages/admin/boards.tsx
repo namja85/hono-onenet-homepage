@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { htmlMiddleware } from "@/middlewares/html.middleware";
@@ -15,6 +16,12 @@ import {
 } from "@/queries";
 
 const adminBoardsRoute = new Hono();
+
+const fileFieldSchema = z.preprocess((value) => {
+  if (value === "" || value == null) return undefined;
+  if (value instanceof File && value.size === 0) return undefined;
+  return value;
+}, z.instanceof(File).optional());
 
 adminBoardsRoute
   .get(
@@ -46,13 +53,18 @@ adminBoardsRoute
         title: z.string().min(1),
         type: z.enum(["notice", "download"]),
         content: z.string().optional().default(""),
-        file: z.instanceof(File).optional(),
+        file: fileFieldSchema,
       })
     ),
     async (c) => {
       const payload = c.req.valid("form");
-      const { data: newBoard } = await createBoard(payload);
-      return c.redirect(`/admin/boards/${newBoard.id}`);
+      try {
+        const { data: newBoard } = await createBoard(payload);
+        return c.redirect(`/admin/boards/${newBoard.id}`);
+      } catch (error) {
+        console.error(error);
+        throw new HTTPException(500, { message: "Failed to create board" });
+      }
     }
   )
   .get(
@@ -95,12 +107,13 @@ adminBoardsRoute
         title: z.string().min(1),
         type: z.enum(["notice", "download"]),
         content: z.string().optional().default(""),
-        file: z.instanceof(File).optional(),
+        file: fileFieldSchema,
       })
     ),
     async (c) => {
       const { id } = c.req.valid("param");
       const payload = c.req.valid("form");
+      console.log("update board", payload);
       await updateBoard(id, payload);
       return c.redirect(`/admin/boards/${id}`);
     }

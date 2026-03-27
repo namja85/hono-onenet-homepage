@@ -93,6 +93,8 @@ export async function updateBoard(
     .where(eq(schema.boards.id, id))
     .returning();
 
+  console.log("updatedBoard", updatedBoard);
+  console.log("payload.file", payload.file);
   await updateFile(id, payload.file);
 
   return { data: updatedBoard };
@@ -103,26 +105,35 @@ export async function updateFile(boardId: number, file?: File) {
     return { data: null };
   }
 
-  const [updatedFile] = await db
-    .update(schema.files)
-    .set({
-      name: file.name,
-      mimeType: file.type,
-      size: file.size,
-      data: Buffer.from(await file.arrayBuffer()),
-    })
-    .where(eq(schema.files.boardId, boardId))
-    .returning();
+  console.log("file", file);
 
-  return { data: updatedFile };
+  const foundFile = await db
+    .select()
+    .from(schema.files)
+    .where(eq(schema.files.boardId, boardId));
+
+  const isFileExists = foundFile.length > 0;
+
+  if (isFileExists) {
+    const [updatedFile] = await db
+      .update(schema.files)
+      .set({
+        name: file.name,
+        mimeType: file.type,
+        size: file.size,
+        data: Buffer.from(await file.arrayBuffer()),
+      })
+      .where(eq(schema.files.boardId, boardId))
+      .returning();
+    return { data: updatedFile };
+  }
+
+  const { data: newFile } = await createFile(boardId, file);
+
+  return { data: newFile };
 }
 
 export async function deleteBoard(id: number) {
-  try {
-    await db.delete(schema.boards).where(eq(schema.boards.id, id));
-    await db.delete(schema.files).where(eq(schema.files.boardId, id));
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to delete board");
-  }
+  await db.delete(schema.boards).where(eq(schema.boards.id, id));
+  await db.delete(schema.files).where(eq(schema.files.boardId, id));
 }

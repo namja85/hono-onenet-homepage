@@ -14,7 +14,9 @@ export const boards = pgTable("boards", {
 
 export const files = pgTable("files", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  boardId: integer("board_id").references(() => boards.id),
+  boardId: integer("board_id").references(() => boards.id, {
+    onDelete: "cascade",
+  }),
   name: text("name").notNull(),
   mimeType: text("mime_type").notNull(),
   size: integer("size").notNull(),
