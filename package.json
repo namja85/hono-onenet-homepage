@@ -5,15 +5,22 @@
     "build": "bun build src/index.tsx --outdir dist --target bun --minify",
     "start": "NODE_ENV=production bun run dist/index.js",
     "start:pm2": "pm2 start \"bun run dist/index.js\" --name hono-onenet-homepage",
-    "deploy": "bash ./scripts/deploy-ec2.sh"
+    "deploy": "bash ./scripts/deploy-ec2.sh",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",
     "date-fns": "^4.1.0",
+    "drizzle-orm": "^1.0.0-beta.19",
     "hono": "^4.12.8",
+    "pg": "^8.20.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^1.0.0-beta.19"
   }
 }
