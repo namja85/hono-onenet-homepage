@@ -26,7 +26,7 @@ customerCenterIndexRoute
     const parsedId = await z.coerce.number().safeParseAsync(id);
 
     if (!parsedId.success) {
-      throw new HTTPException(404, { message: "Not found" });
+      return c.notFound();
     }
 
     const { data: board } = await getBoardById(parsedId.data);
@@ -57,7 +57,7 @@ customerCenterIndexRoute
       const parsedId = await z.coerce.number().safeParseAsync(id);
 
       if (!parsedId.success) {
-        throw new HTTPException(404, { message: "Not found" });
+        return c.notFound();
       }
 
       const { data: board } = await getBoardById(parsedId.data);

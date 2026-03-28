@@ -1,17 +1,14 @@
-import type { Hono } from "hono";
 import Html from "@/components/Html";
-import type { User } from "@/types";
 import NotFoundPage from "@/pages/error/NotFoundPage";
 import ServerErrorPage from "@/pages/error/ServerErrorPage";
+import type { Hono } from "hono";
+import type { Session, User } from "@/types";
 
-function getUser(c: { get: (key: "user") => User }): User {
-  return c.get("user") ?? null;
-}
-
-export function attachPagesErrorHandlers(app: Hono) {
+export function attachPagesErrorHandlers(
+  app: Hono<{ Variables: { user: User; session: Session } }>
+) {
   app.onError((err, c) => {
-    console.error(err);
-    const user = getUser(c);
+    const user = c.get("user");
     return c.html(
       <Html
         title="오류 | 원넷"
@@ -26,7 +23,7 @@ export function attachPagesErrorHandlers(app: Hono) {
   });
 
   app.notFound((c) => {
-    const user = getUser(c);
+    const user = c.get("user");
     return c.html(
       <Html
         title="페이지를 찾을 수 없습니다 | 원넷"

@@ -28,15 +28,14 @@ inquiryIndexRoute
     }),
     async (c) => {
       const payload = c.req.formData();
-      const parsedPayload = await z.safeParseAsync(
-        z.object({
+      const parsedPayload = await z
+        .object({
           name: z.string().min(1),
           phone: z.string().min(1),
           email: z.email(),
           message: z.string().min(1),
-        }),
-        payload
-      );
+        })
+        .safeParseAsync(payload);
 
       if (!parsedPayload.success) {
         throw new HTTPException(400, { message: "Invalid payload" });

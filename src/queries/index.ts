@@ -103,8 +103,6 @@ export async function updateBoard(
     .where(eq(schema.boards.id, id))
     .returning();
 
-  console.log("updatedBoard", updatedBoard);
-  console.log("payload.file", payload.file);
   await updateFile(id, payload.file);
 
   return { data: updatedBoard };
@@ -114,8 +112,6 @@ export async function updateFile(boardId: number, file?: File) {
   if (!file) {
     return { data: null };
   }
-
-  console.log("file", file);
 
   const foundFile = await db
     .select()

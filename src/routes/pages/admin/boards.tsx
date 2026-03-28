@@ -46,15 +46,14 @@ adminBoardsRoute
   )
   .post("/create", async (c) => {
     const payload = c.req.formData();
-    const parsedPayload = await z.safeParseAsync(
-      z.object({
+    const parsedPayload = await z
+      .object({
         title: z.string().min(1),
         type: z.enum(["notice", "download"]),
         content: z.string().optional().default(""),
         file: fileFieldSchema,
-      }),
-      payload
-    );
+      })
+      .safeParseAsync(payload);
 
     if (!parsedPayload.success) {
       throw new HTTPException(400, { message: "Invalid payload" });
@@ -74,7 +73,7 @@ adminBoardsRoute
       const parsedId = await z.coerce.number().safeParseAsync(id);
 
       if (!parsedId.success) {
-        throw new HTTPException(404, { message: "Not found" });
+        return c.notFound();
       }
 
       const { data: board } = await getBoardById(parsedId.data);
@@ -92,7 +91,7 @@ adminBoardsRoute
       const parsedId = await z.coerce.number().safeParseAsync(id);
 
       if (!parsedId.success) {
-        throw new HTTPException(404, { message: "Not found" });
+        return c.notFound();
       }
 
       const { data: board } = await getBoardById(parsedId.data);
@@ -108,15 +107,14 @@ adminBoardsRoute
     }
 
     const payload = c.req.formData();
-    const parsedPayload = await z.safeParseAsync(
-      z.object({
+    const parsedPayload = await z
+      .object({
         title: z.string().min(1),
         type: z.enum(["notice", "download"]),
         content: z.string().optional().default(""),
         file: fileFieldSchema,
-      }),
-      payload
-    );
+      })
+      .safeParseAsync(payload);
 
     if (!parsedPayload.success) {
       throw new HTTPException(400, { message: "Invalid payload" });

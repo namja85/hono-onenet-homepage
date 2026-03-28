@@ -26,16 +26,16 @@ supportIndexRoute
     const parsedId = await z.coerce.number().safeParseAsync(id);
 
     if (!parsedId.success) {
-      throw new HTTPException(404, { message: "Not found" });
+      return c.notFound();
     }
 
     const { data: board } = await getBoardById(parsedId.data);
     if (!board || board.type !== "download") {
-      throw new HTTPException(404, { message: "Not found" });
+      return c.notFound();
     }
     const { data: file } = await getFileByBoardId(parsedId.data);
     if (!file) {
-      throw new HTTPException(404, { message: "Not found" });
+      return c.notFound();
     }
     const disposition = `attachment; filename*=UTF-8''${encodeURIComponent(
       file.name
@@ -57,7 +57,7 @@ supportIndexRoute
       const parsedId = await z.coerce.number().safeParseAsync(id);
 
       if (!parsedId.success) {
-        throw new HTTPException(404, { message: "Not found" });
+        return c.notFound();
       }
 
       const { data: board } = await getBoardById(parsedId.data);

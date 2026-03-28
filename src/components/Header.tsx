@@ -30,7 +30,6 @@ interface HeaderProps {
 }
 
 export default function Header({ user }: HeaderProps) {
-  console.log("Header", user);
   return (
     <header class="p-4">
       <Container class="relative flex items-center justify-between">

@@ -53,13 +53,12 @@ authRoute
   )
   .post("/login", async (c) => {
     const payload = c.req.formData();
-    const parsedPayload = await z.safeParseAsync(
-      z.object({
+    const parsedPayload = await z
+      .object({
         email: z.email(),
         password: z.string().min(8),
-      }),
-      payload
-    );
+      })
+      .safeParseAsync(payload);
 
     if (!parsedPayload.success) {
       const lines: string[] = [];
@@ -107,9 +106,7 @@ authRoute
     return c.redirect("/auth/login", 302);
   })
   .post("/logout", async (c) => {
-    await auth.api.signOut({
-      headers: c.req.raw.headers,
-    });
+    await auth.api.signOut({ headers: c.req.raw.headers });
     return c.redirect("/", 302);
   });
 
