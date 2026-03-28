@@ -7,8 +7,11 @@ import customerCenterIndexRoute from "@/routes/pages/customer-center";
 import inquiryIndexRoute from "@/routes/pages/inquiry";
 import adminIndexRoute from "@/routes/pages/admin";
 import authIndexRoute from "@/routes/pages/auth";
+import { attachPagesErrorHandlers } from "@/routes/pages/error-handlers";
 
 const pagesRoute = new Hono();
+
+attachPagesErrorHandlers(pagesRoute);
 
 pagesRoute
   .route("/", rootIndexRoute)

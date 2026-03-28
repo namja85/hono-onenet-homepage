@@ -1,6 +1,6 @@
 import { Hono } from "hono";
+import type { Context } from "hono";
 import { z } from "zod";
-import { zValidator } from "@hono/zod-validator";
 import { getCookie, setCookie } from "hono/cookie";
 import AuthLogin from "@/pages/auth/login";
 import { htmlMiddleware } from "@/middlewares/html.middleware";
@@ -18,6 +18,16 @@ function appendSetCookies(target: Headers, source: Headers) {
   }
   const legacy = source.get("Set-Cookie");
   if (legacy) target.append("Set-Cookie", legacy);
+}
+
+function setLoginFlashCookie(c: Context, message: string) {
+  setCookie(c, LOGIN_FLASH_COOKIE, message, {
+    path: "/",
+    maxAge: 120,
+    httpOnly: true,
+    sameSite: "Lax",
+    secure: config.nodeEnv === "production",
+  });
 }
 
 const authRoute = new Hono();
@@ -41,61 +51,65 @@ authRoute
       return c.render(<AuthLogin flash={flash} />);
     }
   )
-  .post(
-    "/login",
-    zValidator(
-      "form",
+  .post("/login", async (c) => {
+    const payload = c.req.formData();
+    const parsedPayload = await z.safeParseAsync(
       z.object({
-        email: z.string().email(),
+        email: z.email(),
         password: z.string().min(8),
-      })
-    ),
-    async (c) => {
-      const { email, password } = c.req.valid("form");
-      const authResponse = await auth.api.signInEmail({
-        body: { email, password },
-        headers: c.req.raw.headers,
-        asResponse: true,
-      });
+      }),
+      payload
+    );
 
-      if (authResponse.ok) {
-        const res = c.redirect("/", 302);
-        appendSetCookies(res.headers, authResponse.headers);
-        return res;
-      }
-
-      let message = "로그인에 실패했습니다. 이메일과 비밀번호를 확인해 주세요.";
-      try {
-        const body = (await authResponse.json()) as { message?: string };
-        if (typeof body?.message === "string" && body.message.length > 0) {
-          message = body.message;
+    if (!parsedPayload.success) {
+      const lines: string[] = [];
+      for (const issue of parsedPayload.error.issues) {
+        const key = issue.path[0];
+        if (key === "email") {
+          lines.push("올바른 이메일 주소를 입력해 주세요.");
+        } else if (key === "password") {
+          lines.push("비밀번호는 8자 이상 입력해 주세요.");
+        } else {
+          lines.push(issue.message);
         }
-      } catch {
-        /* use default message */
       }
-
-      setCookie(c, LOGIN_FLASH_COOKIE, message, {
-        path: "/",
-        maxAge: 120,
-        httpOnly: true,
-        sameSite: "Lax",
-        secure: config.nodeEnv === "production",
-      });
+      const message =
+        lines.length > 0
+          ? Array.from(new Set(lines)).join(" ")
+          : "입력값을 확인해 주세요.";
+      setLoginFlashCookie(c, message);
       return c.redirect("/auth/login", 302);
     }
-  )
-  // .post("/logout", async (c) => {
-  //   const authResponse = await auth.api.signOut({
-  //     headers: c.req.raw.headers,
-  //     asResponse: true,
-  //   });
-  //   return c.redirect("/", 302);
-  // })
+
+    const authResponse = await auth.api.signInEmail({
+      body: parsedPayload.data,
+      headers: c.req.raw.headers,
+      asResponse: true,
+    });
+
+    if (authResponse.ok) {
+      const res = c.redirect("/", 302);
+      appendSetCookies(res.headers, authResponse.headers);
+      return res;
+    }
+
+    let message = "로그인에 실패했습니다. 이메일과 비밀번호를 확인해 주세요.";
+    try {
+      const body = (await authResponse.json()) as { message?: string };
+      if (typeof body?.message === "string" && body.message.length > 0) {
+        message = body.message;
+      }
+    } catch {
+      /* use default message */
+    }
+
+    setLoginFlashCookie(c, message);
+    return c.redirect("/auth/login", 302);
+  })
   .post("/logout", async (c) => {
-    const res = await auth.api.signOut({
+    await auth.api.signOut({
       headers: c.req.raw.headers,
     });
-    console.log("logout", res);
     return c.redirect("/", 302);
   });
 
