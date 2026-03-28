@@ -4,13 +4,20 @@ import Layout from "@/components/Layout";
 import LinkButton from "@/components/LinkButton";
 import PageTitle from "@/components/PageTitle";
 import type { BoardType, FileType } from "@/db/schema";
-import { format } from "date-fns";
+import {
+  formatDateYmd,
+  getBoardTypeLabel,
+  hasBoardAttachment,
+  hasTrimmedContent,
+} from "@/lib/utils";
 
 interface AdminBoardsDetailProps {
   board: BoardType & { file: FileType | null };
 }
 
 export default function AdminBoardsDetail({ board }: AdminBoardsDetailProps) {
+  const hasContent = hasTrimmedContent(board.content);
+
   return (
     <Layout>
       <section class="bg-neutral-800 py-10">
@@ -35,11 +42,11 @@ export default function AdminBoardsDetail({ board }: AdminBoardsDetailProps) {
           <div class="bg-neutral-100 rounded-xl p-4">
             <div class="flex flex-col gap-8">
               <div class="flex justify-between items-center">
-                <span class="text-base/6 md:text-xl text-neutral-600 font-bold">
-                  {board.type === "notice" ? "[공지사항]" : "[자료실]"}
+                <span class="text-base/6 md:text-xl text-blue-900 font-bold">
+                  {getBoardTypeLabel(board.type)}
                 </span>
                 <span class="text-base/6 md:text-xl text-neutral-600">
-                  작성일: {format(new Date(board.createdAt), "yyyy-MM-dd")}
+                  작성일: {formatDateYmd(board.createdAt)}
                 </span>
               </div>
               <div class="flex flex-col gap-2">
@@ -52,13 +59,13 @@ export default function AdminBoardsDetail({ board }: AdminBoardsDetailProps) {
                 <span class="text-base/6 md:text-xl text-neutral-600 font-bold">
                   내용
                 </span>
-                {board.content ? (
+                {hasContent ? (
                   <pre class="text-base/6 md:text-xl whitespace-pre-wrap">
                     {board.content}
                   </pre>
                 ) : (
                   <span class="text-base/6 md:text-xl text-neutral-400">
-                    (내용이 없습니다.)
+                    등록된 내용이 없습니다.
                   </span>
                 )}
               </div>
@@ -66,7 +73,7 @@ export default function AdminBoardsDetail({ board }: AdminBoardsDetailProps) {
                 <span class="text-base/6 md:text-xl text-neutral-600 font-bold">
                   첨부파일
                 </span>
-                {board.file ? (
+                {hasBoardAttachment(board.file) ? (
                   <a
                     href={`/admin/boards/download/${board.file.id}`}
                     target="_blank"
@@ -76,7 +83,7 @@ export default function AdminBoardsDetail({ board }: AdminBoardsDetailProps) {
                   </a>
                 ) : (
                   <span class="text-base/6 md:text-xl text-neutral-400">
-                    (첨부파일이 없습니다.)
+                    첨부된 파일이 없습니다.
                   </span>
                 )}
               </div>

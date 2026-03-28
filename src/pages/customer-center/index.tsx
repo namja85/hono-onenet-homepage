@@ -4,6 +4,7 @@ import List from "@/components/List";
 import ListItem from "@/components/ListItem";
 import PageTitle from "@/components/PageTitle";
 import type { BoardType, FileType } from "@/db/schema";
+import { hasBoardAttachment } from "@/lib/utils";
 
 interface CustomerCenterProps {
   boards: (BoardType & { file: FileType | null })[];
@@ -31,10 +32,10 @@ export default function CustomerCenter({ boards }: CustomerCenterProps) {
                   <li key={board.id}>
                     <ListItem
                       type={board.type == "notice" ? "notice" : "download"}
-                      hasFile={!!board.file}
+                      hasFile={hasBoardAttachment(board.file)}
                       title={board.title}
                       date={board.createdAt}
-                      href={`/admin/boards/${board.id}`}
+                      href={`/customer-center/${board.id}`}
                     />
                   </li>
                 ))}

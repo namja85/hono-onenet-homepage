@@ -74,6 +74,16 @@ export async function getBoardById(id: number) {
   return { data: boards[0] };
 }
 
+export async function getFileByBoardId(boardId: number) {
+  const [row] = await db
+    .select()
+    .from(schema.files)
+    .where(eq(schema.files.boardId, boardId))
+    .limit(1);
+
+  return { data: row ?? null };
+}
+
 export async function updateBoard(
   id: number,
   payload: {

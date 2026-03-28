@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import LinkButton from "@/components/LinkButton";
 import PageTitle from "@/components/PageTitle";
 import { BoardType, FileType } from "@/db/schema";
+import { hasBoardAttachment } from "@/lib/utils";
 
 interface AdminBoardsEditProps {
   board: BoardType & { file: FileType | null };
@@ -64,7 +65,7 @@ export default function AdminBoardsEdit({ board }: AdminBoardsEditProps) {
               <div>
                 <div class="flex justify-between items-center">
                   <label for="file">파일 첨부</label>
-                  {board.file && (
+                  {hasBoardAttachment(board.file) && (
                     <span class="text-sm text-neutral-600">
                       기존: {board.file.name}
                     </span>

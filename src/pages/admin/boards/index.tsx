@@ -7,6 +7,7 @@ import PageTitle from "@/components/PageTitle";
 import ArrowLeft from "@/components/icons/ArrowLeft";
 import Plus from "@/components/icons/Plus";
 import type { BoardType, FileType } from "@/db/schema";
+import { hasBoardAttachment } from "@/lib/utils";
 
 interface AdminBoardsProps {
   boards: (BoardType & { file: FileType | null })[];
@@ -50,7 +51,7 @@ export default function AdminBoards({ boards }: AdminBoardsProps) {
                     <li key={board.id}>
                       <ListItem
                         type={board.type == "notice" ? "notice" : "download"}
-                        hasFile={!!board.file}
+                        hasFile={hasBoardAttachment(board.file)}
                         title={board.title}
                         date={board.createdAt}
                         href={`/admin/boards/${board.id}`}

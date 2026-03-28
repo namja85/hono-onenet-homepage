@@ -4,6 +4,7 @@ import List from "@/components/List";
 import ListItem from "@/components/ListItem";
 import PageTitle from "@/components/PageTitle";
 import type { BoardType, FileType } from "@/db/schema";
+import { hasBoardAttachment } from "@/lib/utils";
 
 interface SupportProps {
   boards: (BoardType & { file: FileType | null })[];
@@ -31,10 +32,10 @@ export default function Support({ boards }: SupportProps) {
                   <li key={board.id}>
                     <ListItem
                       type={board.type == "notice" ? "notice" : "download"}
-                      hasFile={!!board.file}
+                      hasFile={hasBoardAttachment(board.file)}
                       title={board.title}
                       date={board.createdAt}
-                      href={`/admin/boards/${board.id}`}
+                      href={`/support/${board.id}`}
                     />
                   </li>
                 ))}
