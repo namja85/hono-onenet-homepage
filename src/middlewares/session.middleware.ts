@@ -1,0 +1,17 @@
+import { createMiddleware } from "hono/factory";
+import { auth } from "@/lib/auth";
+
+export const sessionMiddleware = () =>
+  createMiddleware(async (c, next) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session) {
+      c.set("session", null);
+      c.set("user", null);
+      return next();
+    }
+    c.set("session", session.session);
+    c.set("user", session.user);
+    await next();
+  });

@@ -1,11 +1,13 @@
 import { Hono } from "hono";
+import { guardMiddleware } from "@/middlewares/guard.middleware";
 import { htmlMiddleware } from "@/middlewares/html.middleware";
 import AdminIndex from "@/pages/admin";
-import adminBoardsRoute from "./boards";
+import adminBoardsRoute from "@/routes/pages/admin/boards";
 
 const adminIndexRoute = new Hono();
 
 adminIndexRoute
+  .use(guardMiddleware())
   .get(
     "/",
     htmlMiddleware({

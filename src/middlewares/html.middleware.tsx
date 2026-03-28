@@ -9,9 +9,16 @@ export const htmlMiddleware = ({
   description?: string;
 }) =>
   createMiddleware(async (c, next) => {
+    const user = c.get("user");
+
     c.setRenderer((content) => {
       return c.html(
-        <Html title={title} description={description} pathname={c.req.path}>
+        <Html
+          title={title}
+          description={description}
+          pathname={c.req.path}
+          user={user}
+        >
           {content}
         </Html>
       );

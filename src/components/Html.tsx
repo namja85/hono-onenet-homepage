@@ -2,17 +2,20 @@ import { PropsWithChildren } from "hono/jsx";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import config from "@/config";
+import type { User } from "@/types";
 
 interface HtmlProps extends PropsWithChildren {
   title: string;
   description: string;
   pathname: string;
+  user: User;
 }
 
 export default function Html({
   title,
   description,
   pathname,
+  user,
   children,
 }: HtmlProps) {
   const ogImageUrl = "/public/images/opengraph.png";
@@ -48,9 +51,9 @@ export default function Html({
         <script src="/public/js/main.js" type="module" defer></script>
       </head>
       <body>
-        <Header />
+        <Header user={user} />
         <main>{children}</main>
-        <Footer />
+        <Footer user={user} />
       </body>
     </html>
   );

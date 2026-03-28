@@ -1,5 +1,6 @@
 import Container from "@/components/Container";
-import Menu from "./icons/Menu";
+import Menu from "@/components/icons/Menu";
+import type { User } from "@/types";
 
 const navItems = [
   {
@@ -24,7 +25,12 @@ const navItems = [
   },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  user: User;
+}
+
+export default function Header({ user }: HeaderProps) {
+  console.log("Header", user);
   return (
     <header class="p-4">
       <Container class="relative flex items-center justify-between">
@@ -54,11 +60,13 @@ export default function Header() {
                 </a>
               </li>
             ))}
-            <li key="admin">
-              <a href="/admin">
-                <span class="text-lg font-bold">관리자</span>
-              </a>
-            </li>
+            {user && (
+              <li key="admin">
+                <a href="/admin">
+                  <span class="text-lg font-bold">관리자</span>
+                </a>
+              </li>
+            )}
           </ul>
         </nav>
 
@@ -75,11 +83,13 @@ export default function Header() {
                 </a>
               </li>
             ))}
-            <li key="admin">
-              <a href="/admin" class="block">
-                <span class="text-lg font-bold text-white">관리자</span>
-              </a>
-            </li>
+            {user && (
+              <li key="admin">
+                <a href="/admin" class="block">
+                  <span class="text-lg font-bold text-white">관리자</span>
+                </a>
+              </li>
+            )}
           </ul>
         </nav>
       </Container>

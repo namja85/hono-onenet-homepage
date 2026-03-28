@@ -1,6 +1,11 @@
 import Container from "@/components/Container";
+import type { User } from "@/types";
 
-export default function Footer() {
+interface FooterProps {
+  user: User;
+}
+
+export default function Footer({ user }: FooterProps) {
   return (
     <footer class="bg-neutral-800 text-neutral-300 p-4">
       <Container class="py-16">
@@ -97,9 +102,32 @@ export default function Footer() {
 
         {/* 하단 구분선 */}
         <div class="mt-12 pt-8 border-t border-neutral-700">
-          <p class="text-xs text-neutral-500 text-center md:text-left">
-            원넷 ㈜ | 사업자등록번호: 278-88-00237 | 대표이사: 권성일
-          </p>
+          <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
+            <p class="text-xs text-neutral-500 text-center md:text-left leading-relaxed">
+              원넷 ㈜ | 사업자등록번호: 278-88-00237 | 대표이사: 권성일
+            </p>
+            {user ? (
+              <form
+                action="/auth/logout"
+                method="post"
+                class="flex justify-center md:justify-end"
+              >
+                <button
+                  href="/auth/logout"
+                  class="text-xs text-neutral-500 text-center md:text-right shrink-0 hover:text-neutral-400 transition-colors"
+                >
+                  로그아웃
+                </button>
+              </form>
+            ) : (
+              <a
+                href="/auth/login"
+                class="text-xs text-neutral-500 text-center md:text-right shrink-0 hover:text-neutral-400 transition-colors"
+              >
+                관리자 로그인
+              </a>
+            )}
+          </div>
         </div>
       </Container>
     </footer>
