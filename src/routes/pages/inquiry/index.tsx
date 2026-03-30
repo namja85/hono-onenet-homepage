@@ -27,7 +27,7 @@ inquiryIndexRoute
       description: "고객 문의 접수 처리 결과 페이지입니다.",
     }),
     async (c) => {
-      const payload = c.req.formData();
+      const payload = await c.req.formData();
       const parsedPayload = await z
         .object({
           name: z.string().min(1),
@@ -35,7 +35,12 @@ inquiryIndexRoute
           email: z.email(),
           message: z.string().min(1),
         })
-        .safeParseAsync(payload);
+        .safeParseAsync({
+          name: payload.get("name"),
+          phone: payload.get("phone"),
+          email: payload.get("email"),
+          message: payload.get("message"),
+        });
 
       if (!parsedPayload.success) {
         throw new HTTPException(400, { message: "Invalid payload" });

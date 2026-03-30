@@ -45,7 +45,7 @@ adminBoardsRoute
     }
   )
   .post("/create", async (c) => {
-    const payload = c.req.formData();
+    const payload = await c.req.formData();
     const parsedPayload = await z
       .object({
         title: z.string().min(1),
@@ -53,7 +53,12 @@ adminBoardsRoute
         content: z.string().optional().default(""),
         file: fileFieldSchema,
       })
-      .safeParseAsync(payload);
+      .safeParseAsync({
+        title: payload.get("title"),
+        type: payload.get("type"),
+        content: payload.get("content"),
+        file: payload.get("file"),
+      });
 
     if (!parsedPayload.success) {
       throw new HTTPException(400, { message: "Invalid payload" });
@@ -106,7 +111,7 @@ adminBoardsRoute
       throw new HTTPException(400, { message: "Invalid id" });
     }
 
-    const payload = c.req.formData();
+    const payload = await c.req.formData();
     const parsedPayload = await z
       .object({
         title: z.string().min(1),
@@ -114,7 +119,12 @@ adminBoardsRoute
         content: z.string().optional().default(""),
         file: fileFieldSchema,
       })
-      .safeParseAsync(payload);
+      .safeParseAsync({
+        title: payload.get("title"),
+        type: payload.get("type"),
+        content: payload.get("content"),
+        file: payload.get("file"),
+      });
 
     if (!parsedPayload.success) {
       throw new HTTPException(400, { message: "Invalid payload" });

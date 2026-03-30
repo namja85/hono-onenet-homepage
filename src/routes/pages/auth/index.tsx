@@ -52,13 +52,16 @@ authRoute
     }
   )
   .post("/login", async (c) => {
-    const payload = c.req.formData();
+    const payload = await c.req.formData();
     const parsedPayload = await z
       .object({
         email: z.email(),
         password: z.string().min(8),
       })
-      .safeParseAsync(payload);
+      .safeParseAsync({
+        email: payload.get("email"),
+        password: payload.get("password"),
+      });
 
     if (!parsedPayload.success) {
       const lines: string[] = [];
