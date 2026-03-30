@@ -5,6 +5,7 @@ import Inquiry from "@/pages/inquiry";
 import InquirySubmitFail from "@/pages/inquiry/submit-fail";
 import InquirySubmitSuccess from "@/pages/inquiry/submit-success";
 import { HTTPException } from "hono/http-exception";
+import { sendEmailInquiry } from "@/lib/email";
 
 const inquiryIndexRoute = new Hono();
 
@@ -21,7 +22,7 @@ inquiryIndexRoute
     }
   )
   .post(
-    "/inquiry",
+    "/",
     htmlMiddleware({
       title: "원넷 | 고객문의 접수",
       description: "고객 문의 접수 처리 결과 페이지입니다.",
@@ -44,6 +45,15 @@ inquiryIndexRoute
 
       if (!parsedPayload.success) {
         throw new HTTPException(400, { message: "Invalid payload" });
+      }
+
+      try {
+        await sendEmailInquiry(parsedPayload.data);
+      } catch (error) {
+        console.error("Failed to send email inquiry", error);
+        throw new HTTPException(500, {
+          message: "Failed to send email inquiry",
+        });
       }
 
       return c.render(<InquirySubmitSuccess />);
